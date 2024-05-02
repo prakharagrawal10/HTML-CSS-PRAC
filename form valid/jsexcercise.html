@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Playground</title>
+    <style>
+        #clock {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="clock"></div>
+    <div id="imageContainer"></div>
+    <button onclick="addImage()">Add Image</button>
+    <button onclick="addTextBox()">Add Textbox</button>
+    <div id="textBoxContainer"></div>
+    <br>
+    <button onclick="multiply()">Multiply</button>
+    <div id="result"></div>
+    <br>
+    <div id="countdown"></div>
+
+    <script>
+        // 1) Display a running digital clock
+        function displayClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(displayClock, 1000);
+
+        // 2) Add an image using createElement
+        function addImage() {
+            const img = document.createElement('img');
+            img.src = 'design.jpg';
+            img.style.height = '200px';
+            img.style.width = '300px';
+            img.addEventListener('mouseover', function() {
+                this.src = 'line.png';
+            });
+            img.addEventListener('mouseout', function() {
+                this.src = 'original_image.jpg';
+            });
+            document.getElementById('imageContainer').appendChild(img);
+        }
+
+        // 4) Add Textbox button using createElement
+        function addTextBox() {
+            const textBox1 = document.createElement('input');
+            textBox1.type = 'text';
+            const textBox2 = document.createElement('input');
+            textBox2.type = 'text';
+            document.getElementById('textBoxContainer').appendChild(textBox1);
+            document.getElementById('textBoxContainer').appendChild(textBox2);
+        }
+
+        // 5) Multiply button
+        function multiply() {
+            const textBox1Value = parseFloat(document.getElementById('textBoxContainer').children[0].value);
+            const textBox2Value = parseFloat(document.getElementById('textBoxContainer').children[1].value);
+            const result = document.getElementById('result');
+            result.textContent = `Product: ${textBox1Value * textBox2Value}`;
+        }
+
+        // 6) Countdown timer
+        function countdown(minutes) {
+            let seconds = minutes * 60;
+            const countdownElement = document.getElementById('countdown');
+
+            function tick() {
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+
+                countdownElement.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+                if (seconds > 0) {
+                    seconds--;
+                    setTimeout(tick, 1000);
+                } else {
+                    countdownElement.textContent = 'Countdown finished!';
+                }
+            }
+
+            tick();
+        }
+
+        // Start countdown for 5 minutes
+        countdown(5);
+    </script>
+</body>
+</html>

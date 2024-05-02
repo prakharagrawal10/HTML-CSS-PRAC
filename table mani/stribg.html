@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Functions</title>
+</head>
+<body>
+    <h2>JavaScript Functions</h2>
+
+    <script>
+        // 1) Return characters present in either one of the strings
+        function uniqueCharacters(str1, str2) {
+            const uniqueChars = new Set([...str1, ...str2]);
+            return Array.from(uniqueChars);
+        }
+
+        // 2) Return number of vowels present in a given string
+        function countVowels(str) {
+            const vowels = ['a', 'e', 'i', 'o', 'u'];
+            return str.toLowerCase().split('').filter(char => vowels.includes(char)).length;
+        }
+
+        // 3) Reverse the words in a string
+        function reverseWords(str) {
+            return str.split(' ').reverse().join(' ');
+        }
+
+        // 4) Find how many times each character repeats in a string
+        function countCharacters(str) {
+            const charCount = {};
+            for (let char of str) {
+                charCount[char] = (charCount[char] || 0) + 1;
+            }
+            return Object.entries(charCount).map(([char, count]) => `${char}: ${count}`).join(', ');
+        }
+
+        // 5) Rearrange the words in ascending order of their length
+        function rearrangeWordsByLength(sentence) {
+            return sentence.split(' ').sort((a, b) => a.length - b.length).join(' ');
+        }
+
+        // 6) Check if two strings are anagrams of each other
+        function areAnagrams(str1, str2) {
+            return str1.split('').sort().join('') === str2.split('').sort().join('');
+        }
+
+        // 7) List all possible combinations of characters in a set
+        function combinations(characters) {
+            const results = [];
+
+            function generateCombinations(prefix, remainingChars) {
+                if (prefix.length === characters.length) {
+                    results.push(prefix);
+                    return;
+                }
+                for (let i = 0; i < remainingChars.length; i++) {
+                    generateCombinations(prefix + remainingChars[i], remainingChars.slice(0, i) + remainingChars.slice(i + 1));
+                }
+            }
+
+            generateCombinations('', characters);
+            return results;
+        }
+
+        // 8) Mix two words by changing the first two characters
+        function mixWords(word1, word2) {
+            return word2.slice(0, 2) + word1.slice(2) + ' ' + word1.slice(0, 2) + word2.slice(2);
+        }
+
+        // 9) Replace all occurrences of the first character in a string with "@" except for the first character
+        function replaceFirstCharacter(str) {
+            const firstChar = str.charAt(0);
+            return firstChar + str.slice(1).replace(new RegExp(firstChar, 'g'), '@');
+        }
+
+        // 10) Add "ing" or "ly" to the end of a word based on its length
+        function modifyWord(str) {
+            if (str.length <= 3) return str;
+            return str.endsWith('ing') ? str + 'ly' : str + 'ing';
+        }
+
+        // Example usage:
+        console.log(uniqueCharacters("hello", "world")); // ['h', 'e', 'l', 'o', 'w', 'r', 'd']
+        console.log(countVowels("hello world")); // 3
+        console.log(reverseWords("This is a great day")); // "day great a is This"
+        console.log(countCharacters("hello world")); // "h: 1, e: 1, l: 3, o: 2,  : 1, w: 1, r: 1, d: 1"
+        console.log(rearrangeWordsByLength("This is a great day")); // "a is This day great"
+        console.log(areAnagrams("listen", "silent")); // true
+        console.log(combinations("XYZ")); // ["XYZ", "XZY", "YXZ", "YZX", "ZXY", "ZYX"]
+        console.log(mixWords("pod", "dinner")); // "did ponner"
+        console.log(replaceFirstCharacter("bubble")); // "bu@@le"
+        console.log(modifyWord("eat")); // "eating"
+        console.log(modifyWord("stunning")); // "stunningly"
+        console.log(modifyWord("at")); // "at"
+
+
+        
+    </script>
+</body>
+</html>

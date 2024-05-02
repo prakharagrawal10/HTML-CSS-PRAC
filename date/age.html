@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate Age</title>
+</head>
+<body>
+    <label for="birthdate">Enter your birthdate:</label>
+    <input type="date" id="birthdate">
+    <button onclick="calculateAge()">Calculate Age</button>
+    <button onclick="displayAlertAfter60Seconds()">Display Alert After 60 Seconds</button>
+
+    <script>
+        const date = new Date();
+        console.log(date);
+
+        const div = document.createElement("div");
+
+        // Get year, month, and day
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1; // Add 1 because getMonth() returns 0-based index
+        const day = date.getDate();
+
+        // Concatenate year, month, and day with separators
+        div.innerHTML = year + "/" + month + "/" + day;
+
+        document.body.appendChild(div);
+
+
+        
+        function calculateAge() {
+            // Get the value of the birthdate input
+            const birthdateInput = document.getElementById("birthdate").value;
+            
+            // Convert the input string to a Date object
+            const birthdate = new Date(birthdateInput);
+            
+            // Get the current date
+            const currentDate = new Date();
+            
+            // Calculate the difference in years between the current date and the birthdate
+            let age = currentDate.getFullYear() - birthdate.getFullYear();
+            
+            // Adjust age if the current month is before the birth month or if it's the same month but the current day is before the birth day
+            if (currentDate.getMonth() < birthdate.getMonth() || (currentDate.getMonth() === birthdate.getMonth() && currentDate.getDate() < birthdate.getDate())) {
+                age--;
+            }
+            
+            // Display the calculated age
+            alert("Your age is: " + age);
+        }
+
+
+        function displayAlertAfter60Seconds()
+        {
+
+            const currentTime = new Date();
+            console.log(currentTime.getTime());
+            const alertTime = new Date(currentTime.getTime()+10*1000);
+            setTimeout(function(){
+                alert("Time up");
+            },alertTime-currentTime);
+        }
+    </script>
+</body>
+</html>
