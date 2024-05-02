@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        .error {
+            border: 1px solid red;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 5px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="file"] {
+            margin-top: 10px;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<h2>User Information Form</h2>
+<form name="f1" onsubmit="return validateForm()">
+    <fieldset>
+        <legend>Personal Info</legend>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name"><br/>
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number"><br/>
+
+        <label for="email">Email Id:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email"><br/>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password"><br/>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender">
+            <option value="">Select gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select><br/>
+
+        <label for="dob">DOB:</label>
+        <input type="date" id="dob" name="dob" required><br/>
+    </fieldset>
+
+    <fieldset>
+        <legend>Preferences</legend>
+        <label for="fav-color">Fav color:</label>
+        <select id="fav-color" name="fav-color">
+            <option value="">Select color</option>
+            <option value="red">Red</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+            <option value="yellow">Yellow</option>
+        </select><br/>
+
+        <label for="interests">interests:</label>
+        <select id="interests" interests="gender">
+            <option value="">Select interests</option>
+            <option value="Sports">Sports</option>
+            <option value="Music">Music</option>
+            <option value="Tech">Tech</option>
+            <option value="other">Other</option>
+        </select><br/>
+
+        <div id="detailsInput" style="display: none;">
+            <label for="details">Details:</label>
+            <input type="text" id ="details" placeholder="Enter details:">
+        </div>
+
+        <label>Languages:</label><br/>
+        <input type="checkbox" id="english" name="languages" value="english">
+        <label for="english">English</label><br/>
+        <input type="checkbox" id="spanish" name="languages" value="spanish">
+        <label for="spanish">Spanish</label><br/>
+        <input type="checkbox" id="french" name="languages" value="french">
+        <label for="french">French</label><br/>
+    </fieldset>
+
+    <fieldset>
+        <legend>Comments</legend>
+        <label for="comments">Comments:</label><br/>
+        <textarea id="comments" name="comments" rows="4" cols="50"></textarea><br/>
+
+        <label for="photo">Upload a photo:</label>
+        <input type="file" id="photo" name="photo"><br/>
+    </fieldset>
+
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    function validateForm() {
+        var name = document.getElementById("name").value;
+        var phone = document.getElementById("phone").value;
+        var email = document.getElementById("email").value;
+        var passwd = document.getElementById("password").value;
+        var gender = document.getElementById("gender").value;
+        var dob = document.getElementById("dob").value;
+        var interests = document.getElementById("interests").selectedOptions;
+
+
+        var nameValid = validateName(name);
+        var phoneValid = validatePhone(phone);
+        var emailValid = validateEmail(email);
+        var passwdValid = validatePassword(passwd);
+        var interestsValid = interests.length > 0;
+
+
+        // Remove existing error classes
+        removeErrorClass("name");
+        removeErrorClass("phone");
+        removeErrorClass("email");
+        removeErrorClass("password");
+        removeErrorClass("gender");
+        removeErrorClass("dob");
+        removeErrorClass("interests");
+
+
+
+
+        // Apply error classes to fields with invalid input
+        if (!nameValid) {
+            addErrorClass("name");
+        }
+        if (!phoneValid) {
+            addErrorClass("phone");
+        }
+        if (!emailValid) {
+            addErrorClass("email");
+        }
+        if (!passwdValid) {
+            addErrorClass("password");
+        }
+        if (gender === "") {
+            addErrorClass("gender");
+        }
+        if (dob === "") {
+            addErrorClass("dob");
+        }
+        if (!interestsValid) {
+        addErrorClass("interests");
+        }
+
+        // Display error message
+        if (!nameValid || !phoneValid || !emailValid || !passwdValid || gender === "" || dob === ""|| !interestsValid) {
+            alert("Please fill in all fields correctly");
+            return false;
+        }
+
+        return true;
+    }
+
+    function validateName(name) {
+        var regex = /^[A-Za-z\s]+$/;
+        return regex.test(name);
+    }
+
+    function validatePhone(phone) {
+        var regex = /^\d{10}$/;
+        return regex.test(phone);
+    }
+
+    function validateEmail(email) {
+        var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    }
+
+    function validatePassword(passwd) {
+        // Modify your password validation logic here as needed
+        var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
+        return regex.test(passwd);
+    }
+
+    function addErrorClass(fieldId) {
+        document.getElementById(fieldId).classList.add("error");
+    }
+
+    function removeErrorClass(fieldId) {
+        document.getElementById(fieldId).classList.remove("error");
+    }
+
+    document.getElementById("interests").addEventListener("change",function() {
+        var selectedInterest = this.value;
+        var detailsInput = document.getElementById("detailsInput");
+
+        if (selectedInterest) {
+            detailsInput.style.display = "block";
+        } else {
+            detailsInput.style.display = "none";
+        }
+    });
+</script>
+
+</body>
+</html>
